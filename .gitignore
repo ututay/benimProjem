@@ -1,0 +1,4 @@
+# Takip edilmesi engellenen uzantılar
+*.sqlite3
+__pycache__
+*.pyc
