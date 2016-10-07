@@ -6,7 +6,7 @@ class Kategori(models.Model):
     def __str__(self):
         return self.kategoriIsim
 class Sayfa(models.Model):
-    iliski = models.ForeignKey(Kategori)
+    kategori = models.ForeignKey(Kategori)
     sayfaIsim = models.CharField(max_length=128)
     sayfaUrl = models.URLField()
     sayfaGoruntuleme = models.IntegerField(default=0)
