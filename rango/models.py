@@ -1,6 +1,8 @@
 from django.db import models
 class Kategori(models.Model):
     kategoriIsim = models.CharField(max_length=128,unique=True)
+    kategoriGoruntuleme = models.IntegerField(default=0)
+    kategoriBegeni = models.IntegerField(default=0)
     class Meta:
         verbose_name_plural="Kategoriler"
     def __str__(self):
