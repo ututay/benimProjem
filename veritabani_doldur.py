@@ -27,18 +27,20 @@ def doldur():
         {"title":"Mynet Yemek","url":"http://yemek.mynet.com"},
     ]
     liste = {
-        "Haber" : haber,
-        "Teknoloji" : teknoloji,
-        "Yemek" : yemek,
+        "Haber" : {"sayfalar":haber,"beğeni":64,"görüntüleme":124},
+        "Teknoloji" : {"sayfalar":teknoloji,"beğeni":32,"görüntüleme":64},
+        "Yemek" : {"sayfalar":yemek,"beğeni":16,"görüntüleme":32},
     }
-    for kategori,siteler in liste.items():
-        k = kategori_ekle(kategori)
-        for site in siteler:
-            sayfa_ekle(k,title=site["title"],url=site["url"])
+    for kategori,içerik in liste.items():
+        k = kategori_ekle(kategori,içerik["beğeni"],içerik["görüntüleme"])
+        for site in içerik["sayfalar"]:
+            sayfa_ekle(k,site["title"],site["url"])
     vt_oku()
 
-def kategori_ekle(kategori):
+def kategori_ekle(kategori,beğeni,görüntüleme):
     k = Kategori.objects.get_or_create(kategoriIsim=kategori)[0]
+    k.kategoriBegeni = beğeni
+    k.kategoriGoruntuleme = görüntüleme
     k.save()
     return k
 
