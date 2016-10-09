@@ -10,8 +10,17 @@ class Kategori(models.Model):
 class Sayfa(models.Model):
     kategori = models.ForeignKey(Kategori)
     sayfaIsim = models.CharField(max_length=128)
-    sayfaUrl = models.URLField()
     sayfaGoruntuleme = models.IntegerField(default=0)
+    sayfaUrl = models.URLField()
+    def kategoriDef(self):
+        return self.kategori
+    def sayfaIsimDef(self):
+        return self.sayfaIsim
+    def sayfaUrlDef(self):
+        return self.sayfaUrl
+    kategoriDef.short_description="Sektör"
+    sayfaIsimDef.short_description="Web Sitesi"
+    sayfaUrlDef.short_description="Url Adresi"
     class Meta:
         verbose_name_plural="Sayfalar"
     def __str__(self):
