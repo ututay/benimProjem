@@ -1,5 +1,5 @@
 py manage.py migrate
-py dmoz_vtDoldur.py "https://www.dmoz.org/World/T%%C3%%BCrk%%C3%%A7e/Bas%%C4%%B1n_ve_Yay%%C4%%B1n/Haberler/"
+py dmoz_vtDoldur.py https://www.dmoz.org/World/T%%C3%%BCrk%%C3%%A7e/Bas%%C4%%B1n_ve_Yay%%C4%%B1n/Haberler/
 py dmoz_vtDoldur.py https://www.dmoz.org/World/T%%C3%%BCrk%%C3%%A7e/Bas%%C4%%B1n_ve_Yay%%C4%%B1n/Gazeteler/
 py dmoz_vtDoldur.py https://www.dmoz.org/World/T%%C3%%BCrk%%C3%%A7e/Al%%C4%%B1%%C5%%9Fveri%%C5%%9F/Al%%C4%%B1%%C5%%9Fveri%%C5%%9F_Rehberleri/
 py dmoz_vtDoldur.py https://www.dmoz.org/World/T%%C3%%BCrk%%C3%%A7e/Al%%C4%%B1%%C5%%9Fveri%%C5%%9F/Oyuncaklar_ve_Oyunlar/
