@@ -3,6 +3,6 @@ from rango.models import Kategori,Sayfa
 class SayfaAdmin(admin.ModelAdmin):
     list_display = ("sayfaIsimDef","kategoriDef","sayfaUrlDef")
 class KategoriAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"harfDizisi":("kategoriIsim",)}
+    prepopulated_fields = {"slug":("kategoriIsim",)}
 admin.site.register(Kategori,KategoriAdmin)
 admin.site.register(Sayfa,SayfaAdmin)

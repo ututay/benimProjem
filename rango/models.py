@@ -4,12 +4,12 @@ class Kategori(models.Model):
     kategoriIsim = models.CharField(max_length=128,unique=True)
     kategoriGoruntuleme = models.IntegerField(default=0)
     kategoriBegeni = models.IntegerField(default=0)
-    harfDizisi = models.SlugField(blank=True,unique=True)
+    slug = models.SlugField(blank=True,unique=True)
     türkçeKarakter = "ığüşöçĞÜŞİÖÇ"
     karşıKarakter = "igusocGUSIOC"
     çeviri = str.maketrans(türkçeKarakter,karşıKarakter)
     def save(self,*args,**kwargs):
-        self.harfDizisi = slugify(self.kategoriIsim.translate(self.çeviri))
+        self.slug = slugify(self.kategoriIsim.translate(self.çeviri))
         super().save(*args,**kwargs)
     class Meta:
         verbose_name_plural="Kategoriler"
