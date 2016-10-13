@@ -1,6 +1,6 @@
 <!doctype html>
-<html>
 {% load staticfiles %}
+<html>
 <head>
 <title>Rango</title>
 </head>
@@ -14,7 +14,7 @@
     {% if kategoriler %}
         <ul>
         {% for kategori in kategoriler %}
-            <li>{{ kategori }}</li>
+            <li><a href="/rango/kategori/{{ kategori.slug }}">{{ kategori }}</a></li>
         {% endfor %}
         </ul>
         {% else %}

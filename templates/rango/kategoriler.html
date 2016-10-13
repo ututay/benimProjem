@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rango</title>
+</head>
+<body>
+<div>
+    {% if kategori %}
+        <h1>{{ kategori }}</h1>
+        {% if sayfalar %}
+            <ul>
+            {% for sayfa in sayfalar %}
+                <li>
+                    <a href="{{ sayfa.sayfaUrl }}">{{ sayfa }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>{{ kategori }} kategorisinde sayfa mevcut değil.</strong>
+        {% endif %}
+    {% else %}
+        <strong>Aramaya çalıştığınız kategori mevcut değil!</strong>
+    {% endif %}
+</div>
+<div>
+    <h1><a href="/" title="Anasayfa">Anasayfa</a></h1>
+</div>
+</body>
+</html>
