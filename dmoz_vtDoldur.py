@@ -6,7 +6,11 @@ class Dmoz():
     siteAdresiBul = re.compile("""<a target="_blank" href="(.+)">""")
     siteAdıBul = re.compile("""<div class="site-title">(.+) </div>""")
     def __init__(self,adres):
-        self.site = urlopen(adres)
+        self.site = str()
+        try:
+            self.site = urlopen(adres)
+        except Exception:
+            self.site = urlopen(adres)
         self.liste = list()
         self.kategori = str()  # Veritabanına eklenecek kategori adı
         self.siteAdı = list()  # Veritabanına eklenecek site adı
