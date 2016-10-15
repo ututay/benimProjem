@@ -59,7 +59,7 @@ if __name__ == '__main__':
         exit()
     nesne = Dmoz(sys.argv[1])
     vtDoldur = VeritabanıDoldur()
-    kategori = vtDoldur.kategori_ekle(nesne.kategori, beğeni=random.randint(0, 300),görüntüleme=random.randint(0, 300))
+    kategori = vtDoldur.kategori_ekle(nesne.kategori, beğeni=random.randint(0, 80),görüntüleme=random.randint(0, 300))
     siteler = dict(zip(nesne.siteAdı,nesne.siteAdresi))
     for isim,adres in siteler.items():
-        vtDoldur.sayfa_ekle(kategori,isim,adres)
+        vtDoldur.sayfa_ekle(kategori,isim,adres,goruntuleme=random.randint(0, 999))
