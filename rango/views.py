@@ -4,7 +4,11 @@ from rango.models import Kategori,Sayfa
 
 def index(request):
     kategoriler = Kategori.objects.order_by("-kategoriBegeni")[:5]
-    içerik = {"kategoriler":kategoriler}
+    sayfalar = Sayfa.objects.order_by("-sayfaGoruntuleme")[:5]
+    içerik = {
+        "kategoriler":kategoriler,
+        "sayfalar":sayfalar,
+    }
     return render(request,"rango/index.html",context=içerik)
 
 def about(request):

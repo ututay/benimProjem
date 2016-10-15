@@ -12,6 +12,7 @@
 </div>
 <div>
     {% if kategoriler %}
+        <h1>En çok beğenilen kategoriler</h1>
         <ul>
         {% for kategori in kategoriler %}
             <li><a href="/rango/kategori/{{ kategori.slug }}">{{ kategori }}</a></li>
@@ -19,6 +20,18 @@
         </ul>
         {% else %}
         <strong>Şuan görüntülenecek bir kategori bulunmamaktadır!</strong>
+    {% endif %}
+</div>
+<div>
+    {% if sayfalar %}
+        <h1>En çok görüntülenen sayfalar</h1>
+        <ul>
+        {% for sayfa in sayfalar %}
+            <li><a href="{{ sayfa.sayfaUrl }}">{{ sayfa.sayfaIsim }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>Şuanda görüntülenecek sayfa bulunamadı!</strong>
     {% endif %}
 </div>
 <div>
