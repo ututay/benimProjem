@@ -15,7 +15,7 @@
         <h1>En çok beğenilen kategoriler</h1>
         <ul>
         {% for kategori in kategoriler %}
-            <li><a href="/rango/kategori/{{ kategori.slug }}">{{ kategori }}</a></li>
+            <li><a href="{% url "rango:sayfalarıGöster" kategori.slug %}">{{ kategori }}</a></li>
         {% endfor %}
         </ul>
         {% else %}
@@ -36,7 +36,7 @@
 </div>
 <div>
     <img src="{% static "images/kertenkele.jpg" %}" alt="Rango: Yeşil Kertenle" /><br>
-    <h1><a href="/rango/about/" title="Hakkımda">Hakkımda</a></h1>
+    <h1><a href="{% url "rango:hakkımda" %}" title="Hakkımda">Hakkımda</a></h1>
 </div>
 </body>
 

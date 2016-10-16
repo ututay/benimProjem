@@ -8,7 +8,7 @@
 <h1>Hakkımda Sayfasına Hoşgeldiniz :)</h1><br>
 Bu projenin parçaları {{ isimsoyisim }} tarafından bir araya getirilmiştir.<br>
 <img src="{{ MEDIA_URL }}kedi.jpg" alt="Sevimli kedicik :)" /><br>
-<h1><a href="/" title="Anasayfa">Anasayfa</a></h1>
+<h1><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a></h1>
 </div>
 </body>
 </html>
