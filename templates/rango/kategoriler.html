@@ -12,7 +12,7 @@
             <ul>
             {% for sayfa in sayfalar %}
                 <li>
-                    <a href="{{ sayfa.sayfaUrl }}">{{ sayfa }}</a>
+                    <a href="{{ sayfa.sayfaUrl }}" title="{{ sayfa.sayfaIsim }}">{{ sayfa.sayfaIsim }}</a>
                 </li>
             {% endfor %}
             </ul>
@@ -24,7 +24,12 @@
     {% endif %}
 </div>
 <div>
-    <h1><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a></h1>
+    <h3>
+        <a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a>
+        {% if kategori %}
+            | <a href="{% url "rango:sayfa-ekle" kategori.slug %}" title="Sayfa Ekle">Sayfa Ekle</a>
+        {% endif %}
+    </h3>
 </div>
 </body>
 </html>
