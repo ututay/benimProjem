@@ -1,19 +1,12 @@
-<!doctype html>
-{% load staticfiles %}
-<html>
-<head>
-<title>Rango</title>
-</head>
+{% extends "rango/taban.html" %}
 
-<body>
-<h1>Rango diyorki...</h1>
-<div>
-    hey ordaki ortak!<br>
-    <ul>
-        <li><a href="{% url "rango:kategori-ekle" %}" title="Kategori Ekle">Kategori Ekle</a></li>
-    </ul>
-</div>
-<div>
+{% load staticfiles %}
+
+{% block baslik_blok %}
+    Anasayfa
+{% endblock %}
+
+{% block vucut_blok %}
     {% if kategoriler %}
         <h1>En çok beğenilen kategoriler</h1>
         <ul>
@@ -24,8 +17,6 @@
         {% else %}
         <strong>Şuan görüntülenecek bir kategori bulunmamaktadır!</strong>
     {% endif %}
-</div>
-<div>
     {% if sayfalar %}
         <h1>En çok görüntülenen sayfalar</h1>
         <ul>
@@ -36,11 +27,8 @@
     {% else %}
         <strong>Şuanda görüntülenecek sayfa bulunamadı!</strong>
     {% endif %}
-</div>
-<div>
-    <img src="{% static "images/kertenkele.jpg" %}" alt="Rango: Yeşil Kertenle" /><br>
-    <h1><a href="{% url "rango:hakkımda" %}" title="Hakkımda">Hakkımda</a></h1>
-</div>
-</body>
+{% endblock %}
 
-</html>
+{% block alt_blok %}
+     <img src="{% static "images/kertenkele.jpg" %}" alt="Rango: Yeşil Kertenle" />
+{% endblock %}

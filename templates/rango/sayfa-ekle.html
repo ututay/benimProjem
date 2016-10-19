@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sayfa Ekle</title>
-</head>
-<body>
-<h1>Sayfa Ekleme 'ye Hoşgeldiniz!</h1>
-<div>
+{% extends "rango/taban.html" %}
+
+{% load staticfiles %}
+
+{% block baslik_blok %}
+    Sayfa Ekle
+{% endblock %}
+
+{% block vucut_blok %}
     {% if kategori %}
     <form method="post" action="{% url "rango:sayfa-ekle" kategori.slug %}">
         {% csrf_token %}
@@ -27,7 +27,4 @@
     {% else %}
         <strong>Sayfa eklemek için önce kategori belirlemelisiniz!</strong>
     {% endif %}
-</div>
-<div><h2><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a></h2> </div>
-</body>
-</html>
+{% endblock %}

@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Rango</title>
-</head>
-<body>
-<div>
+{% extends "rango/taban.html" %}
+
+{% load staticfiles %}
+
+{% block baslik_blok %}
+    {% if kategori %}
+        {{ kategori }}
+    {% endif %}
+{% endblock %}
+
+{% block vucut_blok %}
     {% if kategori %}
         <h1>{{ kategori }}</h1>
         {% if sayfalar %}
@@ -20,16 +23,10 @@
             <strong>{{ kategori }} kategorisinde sayfa mevcut değil.</strong>
         {% endif %}
     {% else %}
-        <strong>Aramaya çalıştığınız kategori mevcut değil!</strong>
+        <strong>Ulaşmaya çalıştığınız kategori mevcut değil!</strong>
     {% endif %}
-</div>
-<div>
-    <h3>
-        <a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a>
-        {% if kategori %}
-            | <a href="{% url "rango:sayfa-ekle" kategori.slug %}" title="Sayfa Ekle">Sayfa Ekle</a>
-        {% endif %}
-    </h3>
-</div>
-</body>
-</html>
+{% endblock %}
+
+{% block link_blok %}
+    <li><a href="{% url "rango:sayfa-ekle" kategori.slug %}" title="Sayfa Ekle">Sayfa Ekle</a> </li>
+{% endblock %}

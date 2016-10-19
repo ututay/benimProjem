@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Kategori Ekleme Sayfası</title>
-</head>
-<body>
-<h1>Kategori Ekle</h1>
-<div>
+{% extends "rango/taban.html" %}
+
+{% load staticfiles %}
+
+{% block baslik_blok %}
+    Kategori Ekle
+{% endblock %}
+
+{% block vucut_blok %}
     <form method="post" action="{% url "rango:kategori-ekle" %}">
         {% csrf_token %}
         {% for gizli in bilgiler.hidden_fields %}
@@ -22,7 +22,4 @@
     {% if bilgiler.errors %}
         {{ bilgiler.errors }}
     {% endif %}
-</div>
-<div><h2><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a></h2></div>
-</body>
-</html>
+{% endblock %}

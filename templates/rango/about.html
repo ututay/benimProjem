@@ -1,14 +1,16 @@
-<!doctype html>
-<html>
-<head>
-<title>Hakkımda</title>
-</head>
-<body>
-<div>
-<h1>Hakkımda Sayfasına Hoşgeldiniz :)</h1><br>
-Bu projenin parçaları {{ isimsoyisim }} tarafından bir araya getirilmiştir.<br>
-<img src="{{ MEDIA_URL }}kedi.jpg" alt="Sevimli kedicik :)" /><br>
-<h2><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a></h2>
-</div>
-</body>
-</html>
+{% extends "rango/taban.html" %}
+
+{% load staticfiles %}
+
+{% block baslik_blok %}
+    Hakkımda
+{% endblock %}
+
+{% block vucut_blok %}
+    <h1>Hakkımda Sayfasına Hoşgeldiniz :)</h1><br>
+    Bu projenin parçaları {{ isimsoyisim }} tarafından bir araya getirilmiştir.<br>
+{% endblock %}
+
+{% block alt_blok %}
+    <img src="{{ MEDIA_URL }}kedi.jpg" alt="Sevimli kedicik :)" /><br>
+{% endblock %}
