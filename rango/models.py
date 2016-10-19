@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+
 class Kategori(models.Model):
     kategoriIsim = models.CharField(max_length=128,unique=True)
     kategoriGoruntuleme = models.IntegerField(default=0)
@@ -15,6 +16,7 @@ class Kategori(models.Model):
         verbose_name_plural="Kategoriler"
     def __str__(self):
         return self.kategoriIsim
+
 class Sayfa(models.Model):
     kategori = models.ForeignKey(Kategori)
     sayfaIsim = models.CharField(max_length=128)
