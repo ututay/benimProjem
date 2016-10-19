@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategori Ekleme Sayfası</title>
+</head>
+<body>
+<h1>Kategori Ekle</h1>
+<div>
+    <form method="post" action="{% url "rango:kategori-ekle" %}">
+        {% csrf_token %}
+        {% for gizli in bilgiler.hidden_fields %}
+            {{ gizli }}
+        {% endfor %}
+        {% for gorunur in bilgiler.visible_fields %}
+            {{ gorunur.error }}
+            <strong>{{ gorunur.help_text }}</strong>
+            {{ gorunur }}
+        {% endfor %}
+        <input type="submit" name="Gönder" value="Gönder" />
+    </form>
+    {% if bilgiler.errors %}
+        {{ bilgiler.errors }}
+    {% endif %}
+</div>
+<div><h2><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a></h2></div>
+</body>
+</html>

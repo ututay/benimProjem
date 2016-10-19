@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sayfa Ekle</title>
+</head>
+<body>
+<h1>Sayfa Ekleme 'ye Hoşgeldiniz!</h1>
+<div>
+    {% if kategori %}
+    <form method="post" action="{% url "rango:sayfa-ekle" kategori.slug %}">
+        {% csrf_token %}
+        {% for gizli in formBilgi.hidden_fields %}
+            {{ gizli }}
+        {% endfor %}
+        {% for gorunur in formBilgi.visible_fields %}
+            {{ gorunur.errors }}
+            <strong>{{ gorunur.help_text }}</strong>
+            {{ gorunur }}
+            <br />
+        {% endfor %}
+        {% if formBilgi.errors %}
+            {{ formBilgi.errors }}
+        {% endif %}
+        <input type="submit" name="Gönder" value="Gönder" />
+    </form>
+    {% else %}
+        <strong>Sayfa eklemek için önce kategori belirlemelisiniz!</strong>
+    {% endif %}
+</div>
+<div><h2><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a></h2> </div>
+</body>
+</html>
