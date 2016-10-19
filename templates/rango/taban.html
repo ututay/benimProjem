@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="tr">
+    <head>
+        <meta charset="utf-8">
+        <title>
+            {% block baslik_blok %}
+                Django ile Tango Nasıl Yapılır
+            {% endblock %}
+        </title>
+    <style type="text/css">
+        body,td,th {
+	font-size: 18px;
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", monospace;
+	font-style: normal;
+	font-weight: normal;
+	color: #00D800;
+        }
+        body {
+	background-color: #000000;
+        }
+        a {
+        font-size: 18px;
+        color: #2CC300;
+        }
+        a:link {
+	text-decoration: none;
+	color: #00D800;
+        }
+        a:visited {
+	text-decoration: none;
+	color: #00D800;
+        }
+        a:hover {
+	text-decoration: none;
+	color: #00D800;
+        }
+        a:active {
+            text-decoration: none;
+        }
+    </style>
+    </head>
+    <body>
+        <div>
+            {% block vucut_blok %}
+                Burası html sayfa gövdesinin varsayılan öğesidir.
+            {% endblock %}
+        </div>
+        <hr>
+        <div>
+            <ul>
+                <li><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a> </li>
+                <li><a href="{% url "rango:hakkımda" %}" title="Hakkımda">Hakkımda</a> </li>
+                <li><a href="{% url "rango:kategori-ekle" %}" title="Kategori Ekle">Kategori Ekle</a> </li>
+                {% block link_blok %}
+                {% endblock %}
+            </ul>
+            {% block alt_blok %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
