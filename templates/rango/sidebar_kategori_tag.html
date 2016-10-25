@@ -1,0 +1,9 @@
+<ul>
+    {% if kategoriler %}
+        {% for kategori in kategoriler %}
+            <li><a href="{% url "rango:sayfalarıGöster" kategori.slug %}" title="{{ kategori }}">{{ kategori }}</a> </li>
+        {% endfor %}
+    {% else %}
+        <li><strong>Böyle bir kategori yok.</strong></li>
+    {% endif %}
+</ul>

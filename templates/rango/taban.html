@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load kategori_ozel_etiket %}
 <html lang="tr">
     <head>
         <meta charset="utf-8">
@@ -41,6 +42,10 @@
     </style>
     </head>
     <body>
+        {% block kategori_blok %}
+            {% kategori_listesi %}
+        {% endblock %}
+        <hr>
         <div>
             {% block vucut_blok %}
                 Burası html sayfa gövdesinin varsayılan öğesidir.
