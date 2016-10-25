@@ -1,5 +1,5 @@
 from django.shortcuts import render,reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 # Kategori model 'i içeri aktrılıyor.
 from rango.models import Kategori,Sayfa
 # Kategori form 'u içeri aktarılıyor.ü
@@ -36,11 +36,10 @@ def kategoriEkle(request):
     if request.method == "POST":
         formBilgisi = KategoriForm(request.POST)
         if formBilgisi.is_valid():
-            kategori = formBilgisi.save(commit=True)
-            print(kategori,kategori.slug)
+            formBilgisi.save(commit=True)
             return anasayfa(request)
         else:
-            print(formBilgisi.errors)
+            print("Hata yazdırılıyor:",formBilgisi.errors)
     içerik = {"bilgiler":formBilgisi}
     return render(request, "rango/kategori-ekle.html", context=içerik)
 
@@ -57,7 +56,6 @@ def sayfaEkle(request,kategoriAdresi):
                 sayfa = formBilgi.save(commit=False)
                 sayfa.kategori=kategori
                 sayfa.save()
-                print(sayfa,sayfa.sayfaUrl)
                 return HttpResponseRedirect(
                     reverse(
                         "rango:sayfalarıGöster",
