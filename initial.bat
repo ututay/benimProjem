@@ -1,4 +1,5 @@
 del db.sqlite3
+py manage.py makemigrations rango
 py manage.py migrate
 py dmoz_vtDoldur.py https://www.dmoz.org/World/T%%C3%%BCrk%%C3%%A7e/Bas%%C4%%B1n_ve_Yay%%C4%%B1n/Haberler/
 py dmoz_vtDoldur.py https://www.dmoz.org/World/T%%C3%%BCrk%%C3%%A7e/Bas%%C4%%B1n_ve_Yay%%C4%%B1n/Gazeteler/
