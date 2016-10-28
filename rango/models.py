@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 class Kategori(models.Model):
     kategoriIsim = models.CharField(max_length=128,unique=True)
@@ -35,3 +36,12 @@ class Sayfa(models.Model):
         verbose_name_plural="Sayfalar"
     def __str__(self):
         return self.sayfaIsim
+
+class KullaniciBilgisi(models.Model):
+    kullanici   = models.OneToOneField(User)
+    website     = models.URLField(blank=True)
+    profilResim = models.ImageField(blank=True)
+    def __str__(self):
+        return self.kullanici.username
+    class Meta:
+        verbose_name_plural="Kullanıcılar"
