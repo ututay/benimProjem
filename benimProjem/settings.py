@@ -13,10 +13,10 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
-STATIC_DIR = os.path.join(BASE_DIR,"static")
-MEDIA_DIR = os.path.join(BASE_DIR,"media")
+BASE_DIR     = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR   = os.path.join(BASE_DIR, "static")
+MEDIA_DIR    = os.path.join(BASE_DIR, "media")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
@@ -25,7 +25,7 @@ MEDIA_DIR = os.path.join(BASE_DIR,"media")
 SECRET_KEY = '2k@st3n04&3or%3!@jnu+mbm2!(sj2^sz)u62kgymii3o*6i5m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG         = True
 
 ALLOWED_HOSTS = []
 
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'rango',
+    'rango',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'benimProjem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'benimProjem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE' : 'django.db.backends.sqlite3',
+        'NAME'   : os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -90,17 +90,17 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME'    : 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        "OPTIONS":{"min_length":6},
+        'NAME'    : 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "OPTIONS" : {"min_length": 6},
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME'    : 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME'    : 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -110,22 +110,22 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'tr-TR'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE     = 'UTC'
 
-USE_I18N = True
+USE_I18N      = True
 
-USE_L10N = True
+USE_L10N      = True
 
-USE_TZ = True
+USE_TZ        = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR,]
+STATIC_URL       = '/static/'
+STATICFILES_DIRS = [STATIC_DIR, ]
 
 # Static media dosyaları içni yapılandırmalar.
 
 MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = "/media/"
+MEDIA_URL  = "/media/"

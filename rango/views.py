@@ -1,35 +1,40 @@
-from django.shortcuts import render,reverse
-from django.http import HttpResponseRedirect,HttpResponse
+from django.shortcuts import render, reverse
+from django.http import HttpResponseRedirect
 # Kategori model 'i içeri aktrılıyor.
-from rango.models import Kategori,Sayfa
+from rango.models import Kategori, Sayfa
 # Kategori form 'u içeri aktarılıyor.ü
-from rango.formlar import KategoriForm,SayfaForm
+from rango.formlar import KategoriForm, SayfaForm
+
 
 def anasayfa(request):
     kategoriler = Kategori.objects.order_by("-kategoriBegeni")[:5]
-    sayfalar = Sayfa.objects.order_by("-sayfaGoruntuleme")[:5]
-    içerik = {
-        "kategoriler":kategoriler,
-        "sayfalar":sayfalar,
+    sayfalar    = Sayfa.objects.order_by("-sayfaGoruntuleme")[:5]
+    içerik      = {
+        "kategoriler": kategoriler,
+        "sayfalar"   : sayfalar,
     }
-    return render(request,"rango/index.html",context=içerik)
+    return render(request, "rango/index.html", context=içerik)
+
 
 def about(request):
-    şablonDeğişkenleri = {"isimsoyisim":"Ünal TUTAY"}
-    return render(request,"rango/about.html",context=şablonDeğişkenleri)
+    şablonDeğişkenleri = {"isimsoyisim": "Ünal TUTAY"}
+    return render(request, "rango/about.html", context=şablonDeğişkenleri)
 
-def sayfalarıGöster(request,kategoriAdresi):
+
+def sayfalarıGöster(request, kategoriAdresi):
     içerik = dict()
     try:
-        kategori = Kategori.objects.get(slug=kategoriAdresi)
-        sayfalar = Sayfa.objects.filter(kategori=kategori)
-        içerik["kategori"]=kategori
-        içerik["sayfalar"]=sayfalar
+        kategori           = Kategori.objects.get(slug=kategoriAdresi)
+        sayfalar           = Sayfa.objects.filter(kategori=kategori)
+        içerik["kategori"] = kategori
+        içerik["sayfalar"] = sayfalar
     except Kategori.DoesNotExist:
-        içerik["kategori"]=None
-        içerik["sayfalar"]=None
-        print("{} adresiyle eşleşen herhangi bir kategori bulunamadı.".format(kategoriAdresi))
-    return render(request,"rango/kategoriler.html",context=içerik)
+        içerik["kategori"] = None
+        içerik["sayfalar"] = None
+        print("{} adresiyle eşleşen herhangi bir kategori bulunamadı.".format(
+            kategoriAdresi))
+    return render(request, "rango/kategoriler.html", context=içerik)
+
 
 def kategoriEkle(request):
     formBilgisi = KategoriForm()
@@ -39,11 +44,12 @@ def kategoriEkle(request):
             formBilgisi.save(commit=True)
             return anasayfa(request)
         else:
-            print("Hata yazdırılıyor:",formBilgisi.errors)
-    içerik = {"bilgiler":formBilgisi}
+            print("Hata yazdırılıyor:", formBilgisi.errors)
+    içerik = {"bilgiler": formBilgisi}
     return render(request, "rango/kategori-ekle.html", context=içerik)
 
-def sayfaEkle(request,kategoriAdresi):
+
+def sayfaEkle(request, kategoriAdresi):
     try:
         kategori = Kategori.objects.get(slug=kategoriAdresi)
     except Kategori.DoesNotExist:
@@ -53,46 +59,16 @@ def sayfaEkle(request,kategoriAdresi):
         formBilgi = SayfaForm(request.POST)
         if formBilgi.is_valid():
             if kategori:
-                sayfa = formBilgi.save(commit=False)
-                sayfa.kategori=kategori
+                sayfa          = formBilgi.save(commit=False)
+                sayfa.kategori = kategori
                 sayfa.save()
                 return HttpResponseRedirect(
                     reverse(
                         "rango:sayfalarıGöster",
-                        kwargs={"kategoriAdresi":kategoriAdresi},
+                        kwargs={"kategoriAdresi": kategoriAdresi},
                     )
                 )
         else:
             print(formBilgi.errors)
-    içerik = {"formBilgi":formBilgi,"kategori":kategori}
-    return render(request,"rango/sayfa-ekle.html",context=içerik)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    içerik = {"formBilgi": formBilgi, "kategori": kategori}
+    return render(request, "rango/sayfa-ekle.html", context=içerik)
