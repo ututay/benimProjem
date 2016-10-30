@@ -1,0 +1,31 @@
+{% extends "rango/taban.html" %}
+{% load staticfiles %}
+{% block baslik_blok %}
+    Kullanıcı Kayıt Sayfası
+{% endblock baslik_blok %}
+{% block vucut_blok %}
+
+    {% if kayit %}
+        <strong>Tebrikler, başarıyla kayıt yaptınız :)</strong>
+    {% else %}
+    {% if hatalar %}
+        {{ hatalar }}
+    {% endif %}
+        <form method="post" enctype="multipart/form-data" action="{% url "rango:kullanici-kayit" %}">
+            {% csrf_token %}
+            {% for veri in kullanici.visible_fields %}
+                {{ veri.erros }}
+                {{ veri.help_text }}
+                {{ veri }}
+                <br>
+            {% endfor %}
+            {% for veri in profil.visible_fields %}
+                {{ veri.errors }}
+                {{ veri.help_text }}
+                {{ veri }}
+                <br>
+            {% endfor %}
+            <input type="submit" name="Gönder" value="Gönder">
+        </form>
+    {% endif %}
+{% endblock vucut_blok %}

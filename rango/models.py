@@ -50,8 +50,8 @@ class Sayfa(models.Model):
 
 class KullaniciBilgisi(models.Model):
     kullanici   = models.OneToOneField(User)
-    website     = models.URLField(blank=True)
-    profilResim = models.ImageField(blank=True)
+    website     = models.URLField(blank=True, help_text='Web Siteniz')
+    profilResim = models.ImageField(blank=True, help_text='Profil Resminiz')
 
     def __str__(self):
         return self.kullanici.username

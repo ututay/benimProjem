@@ -42,6 +42,12 @@
     </style>
     </head>
     <body>
+        {% if user.is_authenticated %}
+            Merhaba, {{ user.first_name }} {{ user.last_name }} :)
+        {% else %}
+            Sisteme henüz giriş yapmadınız!
+        {% endif %}
+        <hr>
         {% block kategori_blok %}
             {% kategori_listesi %}
         {% endblock %}
@@ -55,10 +61,16 @@
         <div>
             <ul>
                 <li><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a> </li>
-                <li><a href="{% url "rango:hakkımda" %}" title="Hakkımda">Hakkımda</a> </li>
-                <li><a href="{% url "rango:kategori-ekle" %}" title="Kategori Ekle">Kategori Ekle</a> </li>
-                {% block link_blok %}
-                {% endblock %}
+                <li><a href="{% url "rango:hakkimda" %}" title="Hakkımda">Hakkımda</a> </li>
+                {% if user.is_authenticated %}
+                    {% block link_blok %}
+                    {% endblock %}
+                    <li><a href="{% url "rango:kategori-ekle" %}" title="Kategori Ekle">Kategori Ekle</a> </li>
+                    <li><a href="{% url "rango:cikis-yap" %}" title="Çıkış Yap">Çıkış Yap</a></li>
+                {% else %}
+                    <li><a href="{% url "rango:kullanici-kayit" %}" title="Kullanıcı Kayıt">Kullanıcı Kayıt</a></li>
+                    <li><a href="{% url "rango:giris" %}" title="Giriş yap">Giriş Yap</a></li>
+                {% endif %}
             </ul>
             {% block alt_blok %}
             {% endblock %}
