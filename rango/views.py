@@ -6,7 +6,6 @@ from django.shortcuts import (
                               )
 from django.http import (
                          HttpResponseRedirect,
-                         HttpResponse
                          )
 # Bitiş
 
@@ -19,37 +18,36 @@ from rango.models import (
 from rango.formlar import (
                            KategoriForm,
                            SayfaForm,
-                           KullaniciBilgisiForm,
-                           KullaniciForm
+                           KullaniciForm,
+                           KullaniciBilgisiForm
                            )
-# Sisteme kullanıcı girişini sağlamak için gerekli metaryaller içe aktarılıyor.
-from django.contrib.auth import (
-                                 authenticate,
-                                 login,
-                                 logout,
-                                 )
 # İşlem yapabilmek için sisteme login olunması gereken View 'lar için
 # login_required bezeyicisi sisteme eklendi.
 from django.contrib.auth.decorators import login_required
+# Zaman bilgisini Cookie 'ler der kullanabilmek içni datetime kütüphanesi içe aktarılıyor.
+from datetime import datetime
 
 
 def anasayfa(request):
+    ziyaretSayaci(request)
     kategoriler = Kategori.objects.order_by("-kategoriBegeni")[:5]
     sayfalar    = Sayfa.objects.order_by("-sayfaGoruntuleme")[:5]
     içerik      = {
         "kategoriler": kategoriler,
         "sayfalar"   : sayfalar,
     }
-    return render(request, "rango/index.html", context=içerik)
+    cevap = render(request, "rango/index.html", context=içerik)
+    return cevap
 
 
 def about(request):
+    ziyaretSayaci(request)
     şablonDeğişkenleri = {"isimsoyisim": "Ünal TUTAY"}
     return render(request, "rango/about.html", context=şablonDeğişkenleri)
 
 
 def sayfalarıGöster(request, kategoriAdresi):
-    print("Login Durumu -->", request.user.is_authenticated())
+    ziyaretSayaci(request)
     içerik = dict()
     try:
         kategori           = Kategori.objects.get(slug=kategoriAdresi)
@@ -66,6 +64,7 @@ def sayfalarıGöster(request, kategoriAdresi):
 
 @login_required
 def kategoriEkle(request):
+    ziyaretSayaci(request)
     formBilgisi = KategoriForm()
     if request.method == "POST":
         formBilgisi = KategoriForm(request.POST)
@@ -80,6 +79,7 @@ def kategoriEkle(request):
 
 @login_required
 def sayfaEkle(request, kategoriAdresi):
+    ziyaretSayaci(request)
     try:
         kategori = Kategori.objects.get(slug=kategoriAdresi)
     except Kategori.DoesNotExist:
@@ -104,53 +104,46 @@ def sayfaEkle(request, kategoriAdresi):
     return render(request, "rango/sayfa-ekle.html", context=içerik)
 
 
-def kullaniciKayit(request):
-    kayit = False
-    formBilgi_kullanici = KullaniciForm()
-    formBilgi_profil    = KullaniciBilgisiForm()
-    hatalar = str()
+def ziyaretSayaci(request):
+    ziyaretSayisiCookie = int(request.session.get("ziyaretSayisi", "1"))
+    sonZiyaretCookie    = request.session.get("sonZiyaret", str(datetime.today()))
+    sonZiyaretNesne     = datetime.strptime(sonZiyaretCookie[:-7], "%Y-%m-%d %H:%M:%S")
+    if (datetime.now() - sonZiyaretNesne).seconds > 0:
+        ziyaretSayisiCookie += 1
+        request.session["sonZiyaret"] = str(datetime.today())
+    else:
+        request.session["sonZiyaret"] = sonZiyaretCookie
+    request.session["ziyaretSayisi"] = ziyaretSayisiCookie
+    return ziyaretSayisiCookie
+
+
+def kayit(request):
+    print("İSTEK YAPILDI", request)
+    hata = dict()
+    kullanici = KullaniciForm()
+    profil = KullaniciBilgisiForm()
     if request.method == "POST":
-        formBilgi_kullanici = KullaniciForm(request.POST)
-        formBilgi_profil    = KullaniciBilgisiForm(request.POST)
-        if formBilgi_kullanici.is_valid() and formBilgi_profil.is_valid():
-            kullanici = formBilgi_kullanici.save()
-            kullanici.set_password(kullanici.password)
-            kullanici.save()
-            profil           = formBilgi_profil.save(commit=False)
-            profil.kullanici = kullanici
+        kullanici = KullaniciForm(request.POST)
+        profil = KullaniciBilgisiForm(request.POST)
+        if kullanici.is_valid() and profil.is_valid():
+            kullanici = kullanici.save(commit=True)
+            profil = profil.save(commit=False)
             if "profilResim" in request.FILES:
                 profil.profilResim = request.FILES["profilResim"]
-            print("Profil Resmi", request.FILES)
+            profil.kullanici = kullanici
             profil.save()
-            kayit = True
+            return HttpResponseRedirect(reverse("registration_complete"))
         else:
-            hatalar = str(formBilgi_profil.errors) + str(formBilgi_kullanici.errors)
-    içerikler = {
-                "kullanici" : formBilgi_kullanici,
-                "profil"    : formBilgi_profil,
-                "kayit"     : kayit,
-                "hatalar"   : hatalar
-                }
-    return render(request, "rango/kullanici-kayit.html", context=içerikler)
-
-
-def giris(request):
-    if request.method == "POST":
-        kullanici_adi = request.POST.get("kullanici_adi")
-        sifre         = request.POST.get("sifre")
-        kullanici     = authenticate(username=kullanici_adi, password=sifre)
-        if kullanici:
-            if kullanici.is_active:
-                login(request, kullanici)
-                return HttpResponseRedirect(reverse("rango:anasayfa"))
-            else:
-                print("{0} kullanıcı adı ve {1} şifreli hesap aktif değil!".format(kullanici_adi, sifre))
-        else:
-            return HttpResponse("Yanlış kullanıcı adı veya şifre girdiniz.")
-    return render(request, "rango/giris.html")
-
-
-@login_required
-def cikisYap(request):
-    logout(request)
-    return HttpResponseRedirect(reverse("rango:anasayfa"))
+            if not kullanici.is_valid():
+                hata.update(kullanici.errors)
+                print(kullanici.errors)
+            if not profil.is_valid():
+                hata.update(profil.errors)
+                print(profil.errors)
+    print(hata)
+    içerik = {
+            "kullanici": kullanici,
+            "profil": profil,
+            "hata": hata
+    }
+    return render(request, "registration/registration_form.html", içerik)

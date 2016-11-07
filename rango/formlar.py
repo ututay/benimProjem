@@ -1,6 +1,7 @@
 from django import forms
 from rango.models import Kategori, Sayfa, KullaniciBilgisi
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
 class KategoriForm(forms.ModelForm):
@@ -41,29 +42,33 @@ class SayfaForm(forms.ModelForm):
         exclude = ("kategori",)
 
 
-class KullaniciForm(forms.ModelForm):
-    password = forms.CharField(
+class KullaniciForm(UserCreationForm):
+    password1 = forms.CharField(
                                widget    = forms.PasswordInput(),
-                               help_text = 'Şifre'
+                               label = 'Şifre',
+                               help_text= "Şifre",
+                               )
+    password2 = forms.CharField(
+                               widget    = forms.PasswordInput(),
+                               label = 'Şifre Onay'
                                )
     username = forms.CharField(
-                               help_text='Kullanıcı Adı'
+                               label='Kullanıcı Adı'
                                )
     email    = forms.EmailField(
-                                help_text='Email Adresi',
+                                label='Email Adresi',
                                 )
     first_name = forms.CharField(
-                                 help_text = "Adınız"
+                                 label = "Adınız"
                                  )
     last_name = forms.CharField(
-                                help_text = "Soyadınız"
+                                label = "Soyadınız"
                                 )
 
     class Meta:
         model  = User
         fields = (
                   "username",
-                  "password",
                   "email",
                   "first_name",
                   "last_name"

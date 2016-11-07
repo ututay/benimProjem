@@ -19,8 +19,12 @@ from rango import views
 from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r"^$", views.anasayfa, name="anasayfa"),
     url(r"^rango/", include("rango.urls")),
+    url(r"^hesaplar/register/$", views.kayit, name="registration_register"),
+    url(r"^hesaplar/", include("registration.backends.simple.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

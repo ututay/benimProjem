@@ -1,0 +1,27 @@
+{% extends "rango/taban.html" %}
+{% block baslik_blok %}
+    Kayıt Oluştur
+{% endblock baslik_blok %}
+{% block vucut_blok %}
+{% if hata.values %}
+  {% for veri in hata.values %}
+    <h3>{{ veri }}</h3>
+  {% endfor %}
+{% endif %}
+<form method="post" enctype="multipart/form-data" action=".">
+  {% csrf_token %}
+  {% for veri in kullanici %}
+    <p>
+      {{ veri.label }}:
+      {{ veri }}
+    </p>
+  {% endfor %}
+  {% for veri in profil %}
+    <p>
+      {{ veri.label }}:
+      {{ veri }}
+    </p>
+  {% endfor %}
+  <input type="submit" value="Gönder" />
+</form>
+{% endblock %}

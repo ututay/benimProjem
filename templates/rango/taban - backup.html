@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load kategori_ozel_etiket %}
+<html lang="tr">
+    <head>
+        <meta charset="utf-8">
+        <title>
+            {% block baslik_blok %}
+                Django ile Tango Nasıl Yapılır
+            {% endblock %}
+        </title>
+    <style type="text/css">
+        body,td,th {
+	font-size: 18px;
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", monospace;
+	font-style: normal;
+	font-weight: normal;
+	color: #00D800;
+        }
+        body {
+	background-color: #000000;
+        }
+        a {
+        font-size: 18px;
+        color: #2CC300;
+        }
+        a:link {
+	text-decoration: none;
+	color: #00D800;
+        }
+        a:visited {
+	text-decoration: none;
+	color: #00D800;
+        }
+        a:hover {
+	text-decoration: none;
+	color: #00D800;
+        }
+        a:active {
+            text-decoration: none;
+        }
+    </style>
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+            Merhaba, {{ user.first_name }} {{ user.last_name }} :)
+        {% else %}
+            Sisteme henüz giriş yapmadınız!
+        {% endif %}
+        <br>
+        {% if request.session %}
+           {% if request.session.ziyaretSayisi %}
+           Ziyaret sayınız : {{ request.session.ziyaretSayisi }}
+           {% endif %}
+        {% else %}
+            Tarayıcınızda Cookie kapalı! Sitemizden daha çok faydalanmak için cookie 'leri açınız!
+        {% endif %}
+        <hr>
+        {% block kategori_blok %}
+            {% kategori_listesi %}
+        {% endblock %}
+        <hr>
+        <div>
+        <!-- Sayfa vücudunu oluşturan ana kodların bloğu -->
+        <!-- BAŞLANGIÇ -->
+            {% block vucut_blok %}
+                Burası html sayfa gövdesinin varsayılan öğesidir.
+            {% endblock %}
+        <!-- BİTİŞ -->
+        </div>
+        <hr>
+        <div>
+            <ul>
+                <li><a href="{% url "rango:anasayfa" %}" title="Anasayfa">Anasayfa</a> </li>
+                <li><a href="{% url "rango:hakkimda" %}" title="Hakkımda">Hakkımda</a> </li>
+                {% if user.is_authenticated %}
+                    {% block link_blok %}
+                    {% endblock %}
+                    <li><a href="{% url "rango:kategori-ekle" %}" title="Kategori Ekle">Kategori Ekle</a> </li>
+                    <li><a href="{% url "auth_password_change" %}" title="Şifre Değiştir">Şifre Değiştir</a> </li>
+                    <li><a href="{% url "rango:kategori-ekle" %}" title="Kategori Ekle">Kategori Ekle</a> </li>
+                    <li><a href="{% url "auth_password_reset" %}" title="Şifre Sıfırla">Şifre Sıfırla</a></li>
+                    <li><a href="{% url "auth_logout" %}?next=/rango/" title="Çıkış Yap">Çıkış Yap</a></li>
+                {% else %}
+                    <li><a href="{% url "registration_register" %}" title="Kullanıcı Kayıt">Kullanıcı Kayıt</a></li>
+                    <li><a href="{% url "auth_login" %}" title="Giriş yap">Giriş Yap</a></li>
+                {% endif %}
+            </ul>
+            {% block alt_blok %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

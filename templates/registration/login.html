@@ -1,0 +1,16 @@
+{% extends "rango/taban.html" %}
+{% block baslik_blok %}
+    Giriş Yap
+{% endblock %}
+{% block vucut_blok %}
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Giriş Yap" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    <p>Parolanızı mı unuttunuz? <a href="{% url 'auth_password_reset' %}">Sıfırlayın</a>.</p>
+    <p>Üye değil misiniz? <a href="{% url 'registration_register' %}">Kayıt ol</a>.</p>
+{% endblock vucut_blok %}
+

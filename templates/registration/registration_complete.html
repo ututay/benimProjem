@@ -1,0 +1,9 @@
+{% extends "rango/taban.html" %}
+{% block baslik_blok %}
+    Kayıt Tamamlandı
+{% endblock baslik_blok %}
+
+{% block vucut_blok %}
+<p>Tebrikler, sitemize kaydınız başarıyla tamamlanmıştır.</p>
+<p>Şimdi <a href="{% url "auth_login" %}">siteye giriş yapabilirsiniz.</a></p>
+{% endblock %}

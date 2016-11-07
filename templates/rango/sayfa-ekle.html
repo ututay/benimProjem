@@ -14,10 +14,11 @@
             {{ gizli }}
         {% endfor %}
         {% for gorunur in formBilgi.visible_fields %}
-            {{ gorunur.errors }}
-            <strong>{{ gorunur.help_text }}</strong>
-            {{ gorunur }}
-            <br />
+            <p>
+                {{ gorunur.errors }}
+                {{ gorunur.help_text }}
+                {{ gorunur }}
+            </p>
         {% endfor %}
         {% if formBilgi.errors %}
             {{ formBilgi.errors }}

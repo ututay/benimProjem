@@ -13,9 +13,11 @@
             {{ gizli }}
         {% endfor %}
         {% for gorunur in bilgiler.visible_fields %}
-            {{ gorunur.error }}
-            <strong>{{ gorunur.help_text }}</strong>
-            {{ gorunur }}
+            <p>
+                {{ gorunur.error }}
+                {{ gorunur.help_text }}
+                {{ gorunur }}
+            </p>
         {% endfor %}
         <input type="submit" name="Gönder" value="Gönder" />
     </form>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rango',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -130,4 +131,10 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL  = "/media/"
 
-LOGIN_URL = "/rango/giris/"
+
+# Üye kayıdı ile ilgili ayarlar aşağıda bulunmaktadır.
+LOGIN_URL               = "/rango/giris/"
+LOGIN_REDIRECT_URL      = '/rango/'
+REGISTRATION_OPEN       = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
