@@ -1,12 +1,15 @@
 {% extends "rango/taban.html" %}
 
 {% load staticfiles %}
-
+{% block stilDosyalari %}
+    <link href="{% static "bootstrap/examples/signin/signin.css" %}" rel="stylesheet">
+{% endblock stilDosyalari %}
 {% block baslik_blok %}
     Kategori Ekle
 {% endblock %}
 
 {% block vucut_blok %}
+        <h3 class="form-signin-heading">Kategori Ekleme Sayfası</h3>
     <form method="post" action="{% url "rango:kategori-ekle" %}">
         {% csrf_token %}
         {% for gizli in bilgiler.hidden_fields %}
@@ -19,7 +22,7 @@
                 {{ gorunur }}
             </p>
         {% endfor %}
-        <input type="submit" name="Gönder" value="Gönder" />
+        <input class="btn btn-primary" type="submit" name="Gönder" value="Gönder" />
     </form>
     {% if bilgiler.errors %}
         {{ bilgiler.errors }}

@@ -1,34 +1,63 @@
 {% extends "rango/taban.html" %}
-
 {% load staticfiles %}
-
+{% block stilDosyalari %}
+  <link href="{% static "ozel_bootstrap/narrow-jumbotron.css" %}" rel="stylesheet">
+{% endblock stilDosyalari %}
 {% block baslik_blok %}
-    Anasayfa
+  Anasayfa
 {% endblock %}
-
 {% block vucut_blok %}
-    {% if kategoriler %}
-        <h1>En çok beğenilen kategoriler</h1>
-        <ul>
-        {% for kategori in kategoriler %}
-            <li><a href="{% url "rango:sayfalarıGöster" kategori.slug %}">{{ kategori }}</a></li>
-        {% endfor %}
-        </ul>
-        {% else %}
-        <strong>Şuan görüntülenecek bir kategori bulunmamaktadır!</strong>
-    {% endif %}
-    {% if sayfalar %}
-        <h1>En çok görüntülenen sayfalar</h1>
-        <ul>
-        {% for sayfa in sayfalar %}
-            <li><a href="{{ sayfa.sayfaUrl }}">{{ sayfa.sayfaIsim }}</a></li>
-        {% endfor %}
-        </ul>
+  <div class="jumbotron">
+    <h1 class="display-3">Siteme hoşgeldiniz!</h1>
+    {% if user.is_authenticated %}
+      <p class="lead">Merhaba, {{ user.first_name }} {{ user.last_name }} :)</p>
+      {% if kullanici.profilResim %}
+        <img src="{{ MEDIA_URL }}{{ kullanici.profilResim }}" class="rounded-circle" width="150px" height="150px">
+      {% else %}
+        Şuanda profil resminiz bulunmuyor, profil resmi eklemek için üyelik sayfanıza gidebilirsiniz.
+      {% endif %}
     {% else %}
-        <strong>Şuanda görüntülenecek sayfa bulunamadı!</strong>
+      Siteye henüz giriş yapmadınız. Aşağıdaki üye ol butonuna tıklayarak sitemize hemen üye olmaya başlayabilirsiniz.
+      <p><a class="btn btn-lg btn-success" href="{% url "registration_register" %}" role="button">Üye Ol</a></p>
     {% endif %}
+  </div>
+  <div class="row marketing">
+    <div class="col-lg-6">
+      <h4>En çok beğenilen kategoriler</h4>
+      <p>
+        {% if kategoriler %}
+          <ul class="list-group">
+            {% for kategori in kategoriler %}
+              <li class="list-group-item">
+                <span class="tag tag-default tag-pill float-xs-right">{{ kategori.kategoriBegeni }}</span>
+                <a href="{% url "rango:sayfalarıGöster" kategori.slug %}">{{ kategori }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </p>
+      {% else %}
+        <p>Şuan görüntülenecek bir kategori bulunmamaktadır!</p>
+      {% endif %}
+    </div>
+    <div class="col-lg-6">
+      <h4>En çok görüntülenen sayfalar</h4>
+      <p>
+        {% if sayfalar %}
+          <ul class="list-group">
+            {% for sayfa in sayfalar %}
+              <li class="list-group-item">
+                <span class="tag tag-default tag-pill float-xs-right">{{ sayfa.sayfaGoruntuleme }}</span>
+                <a href="{{ sayfa.sayfaUrl }}">{{ sayfa.sayfaIsim }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>Şuanda görüntülenecek sayfa bulunamadı!</p>
+        {% endif %}
+      </p>
+    </div>
+  </div>
 {% endblock %}
-
 {% block alt_blok %}
-     <img src="{% static "images/kertenkele.jpg" %}" alt="Rango: Yeşil Kertenle" />
+  <!--   <center><img src="{% static "images/kertenkele.jpg" %}" alt="Rango: Yeşil Kertenle" /></center> -->
 {% endblock %}

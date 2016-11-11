@@ -12,12 +12,13 @@
     {% if kategori %}
         <h1>{{ kategori }}</h1>
         {% if sayfalar %}
-            <ul>
-            {% for sayfa in sayfalar %}
-                <li>
+            <ul class="list-group">
+                {% for sayfa in sayfalar %}
+                    <li class="list-group-item">
+                    <span class="tag tag-default tag-pill float-xs-right">{{ sayfa.sayfaGoruntuleme }}</span>
                     <a href="{{ sayfa.sayfaUrl }}" title="{{ sayfa.sayfaIsim }}">{{ sayfa.sayfaIsim }}</a>
-                </li>
-            {% endfor %}
+                    </li>
+                {% endfor %}
             </ul>
         {% else %}
             <strong>{{ kategori }} kategorisinde sayfa mevcut değil.</strong>

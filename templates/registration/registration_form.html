@@ -1,27 +1,67 @@
 {% extends "rango/taban.html" %}
 {% block baslik_blok %}
-    Kayıt Oluştur
+  Kayıt Oluştur
 {% endblock baslik_blok %}
 {% block vucut_blok %}
-{% if hata.values %}
-  {% for veri in hata.values %}
-    <h3>{{ veri }}</h3>
-  {% endfor %}
-{% endif %}
-<form method="post" enctype="multipart/form-data" action=".">
-  {% csrf_token %}
-  {% for veri in kullanici %}
-    <p>
-      {{ veri.label }}:
-      {{ veri }}
-    </p>
-  {% endfor %}
-  {% for veri in profil %}
-    <p>
-      {{ veri.label }}:
-      {{ veri }}
-    </p>
-  {% endfor %}
-  <input type="submit" value="Gönder" />
-</form>
+  <div class="bd-example" data-example-id="">
+    {% if hata.values %}
+      {% for veri in hata.values %}
+        <h3>{{ veri }}</h3>
+      {% endfor %}
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" action=".">
+      {% csrf_token %}
+      <div class="form-group row">
+        <label for="example-text-input" class="col-xs-2 col-form-label">Kullanıcı Adınız</label>
+        <div class="col-xs-3">
+          <input class="form-control" type="text" name="username">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-email-input" class="col-xs-2 col-form-label">Email</label>
+        <div class="col-xs-3">
+          <input class="form-control" type="email" name="email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-text-input" class="col-xs-2 col-form-label">Adınız</label>
+        <div class="col-xs-3">
+          <input class="form-control" type="text" name="first_name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-text-input" class="col-xs-2 col-form-label">Soyadınız</label>
+        <div class="col-xs-3">
+          <input class="form-control" type="text" name="last_name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-password-input" class="col-xs-2 col-form-label">Şifre</label>
+        <div class="col-xs-3">
+          <input class="form-control" type="password" name="password1" aria-describedby="passwordHelpInline">
+          <small id="passwordHelpInline" class="text-muted">
+          Şifreniz karakter ve sayılardan oluşmalıdır.
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-password-input" class="col-xs-2 col-form-label">Şifre Onay</label>
+        <div class="col-xs-3">
+          <input class="form-control" type="password" name="password2">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-url-input" class="col-xs-2 col-form-label">Web Siteniz</label>
+        <div class="col-xs-3">
+          <input class="form-control" type="url" name="website">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputFile">Profil Resminiz</label>
+        <input type="file" class="form-control-file" aria-describedby="fileHelp" name="profilResim">
+        <small class="form-text text-muted">Profil resmi yüklemek zorunlu değildir, isterseniz bu adımı es geçebilirsiniz.</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+    </form>
+  </div>
 {% endblock %}

@@ -12,7 +12,8 @@ from django.http import (
 # Kategori ve Sayfa modeli içeri akratılıyor.
 from rango.models import (
                           Kategori,
-                          Sayfa
+                          Sayfa,
+                          KullaniciBilgisi,
                           )
 # Form verileri içeri aktarılıyor.
 from rango.formlar import (
@@ -26,15 +27,21 @@ from rango.formlar import (
 from django.contrib.auth.decorators import login_required
 # Zaman bilgisini Cookie 'ler der kullanabilmek içni datetime kütüphanesi içe aktarılıyor.
 from datetime import datetime
+from django.contrib.auth.models import User
 
 
 def anasayfa(request):
     ziyaretSayaci(request)
+    kullanici = None
+    if str(request.user) is not "AnonymousUser":
+        kullaniciNesnesi = User.objects.get(username=request.user)
+        kullanici = KullaniciBilgisi.objects.get(kullanici=kullaniciNesnesi)
     kategoriler = Kategori.objects.order_by("-kategoriBegeni")[:5]
     sayfalar    = Sayfa.objects.order_by("-sayfaGoruntuleme")[:5]
     içerik      = {
         "kategoriler": kategoriler,
         "sayfalar"   : sayfalar,
+        "kullanici"  : kullanici,
     }
     cevap = render(request, "rango/index.html", context=içerik)
     return cevap

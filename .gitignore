@@ -1,6 +1,7 @@
-# Takip edilmesi engellenen uzantılar
+﻿# Takip edilmesi engellenen uzantılar
 *.sqlite3
 __pycache__
 *.pyc
 migrations/
 .idea
+deneme.html

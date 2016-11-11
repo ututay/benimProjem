@@ -7,5 +7,5 @@ urlpatterns = [
     url(r"^about/", views.about, name="hakkimda"),
     url(r"^kategori/(?P<kategoriAdresi>[\w\-]+)/$", views.sayfalarıGöster, name="sayfalarıGöster"),
     url(r"^kategori-ekle/$", views.kategoriEkle, name="kategori-ekle"),
-    url(r"^sayfa-ekle/(?P<kategoriAdresi>[\w\-]+)/$", views.sayfaEkle, name="sayfa-ekle"),
+    url(r"^(?P<kategoriAdresi>[\w\-]+)/sayfa-ekle/$", views.sayfaEkle, name="sayfa-ekle"),
 ]

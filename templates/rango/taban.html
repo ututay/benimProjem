@@ -9,81 +9,68 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="http://v4-alpha.getbootstrap.com/favicon.ico">
-
+    <link rel="icon" href="{% static "bootstrap/favicon.ico" %}">
     <title>Rango - {% block baslik_blok %} Django ile Tango Nasıl Yapılır {% endblock %}</title>
-
     <!-- Bootstrap core CSS -->
-    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="{% static "bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
-  </head>
-
-  <body>
-
-    <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
-      <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
-      <a class="navbar-brand" href="/">Rango</a>
-      <div id="navbar">
-        <nav class="nav navbar-nav float-xs-left">
-          <a class="nav-item nav-link" href="{% url "rango:anasayfa" %}">Anasayfa</a>
-          <a class="nav-item nav-link" href="{% url "rango:hakkimda" %}">Hakkımızda</a>
-          {% if user.is_authenticated %}
-            <a class="nav-item nav-link" href="{% url "rango:kategori-ekle" %}">Kategori Ekle</a>
-            {% block link_blok %}{% endblock link_blok %}
-            <a class="nav-item nav-link" href="{% url "auth_logout" %}">Çıkış Yap</a>
-          {% else %}
-            <a class="nav-item nav-link" href="{% url "auth_login" %}">Giriş Yap</a>
-            <a class="nav-item nav-link" href="{% url "registration_register" %}">Kullanıcı Kayıt</a>
-
-          {% endif %}
-        </nav>
-      </div>
+    <link href="{% static "ozel_bootstrap/dashboard.css" %}" rel="stylesheet">
+  {% block stilDosyalari %}{% endblock stilDosyalari %}
+</head>
+<body>
+  <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
+    <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
+    <a class="navbar-brand" href="/">Rango</a>
+    <div id="navbar">
+      <nav class="nav navbar-nav float-xs-left">
+        <a class="nav-item nav-link" href="{% url "rango:anasayfa" %}">Anasayfa</a>
+        <a class="nav-item nav-link" href="{% url "rango:hakkimda" %}">Hakkımızda</a>
+        {% if user.is_authenticated %}
+          <a class="nav-item nav-link" href="{% url "rango:kategori-ekle" %}">Kategori Ekle</a>
+        {% block link_blok %}{% endblock link_blok %}
+        <a class="nav-item nav-link" href="{% url "auth_logout" %}">Çıkış Yap</a>
+      {% else %}
+        <a class="nav-item nav-link" href="{% url "auth_login" %}">Giriş Yap</a>
+        <a class="nav-item nav-link" href="{% url "registration_register" %}">Kullanıcı Kayıt</a>
+      {% endif %}
     </nav>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          {% block kategori_blok %}
-              {% kategori_listesi %}
-          {% endblock %}
-        </div>
-        <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-            {% if user.is_authenticated %}
-                Merhaba, {{ user.first_name }} {{ user.last_name }} :)
-            {% else %}
-                Sisteme henüz giriş yapmadınız!
-            {% endif %}
-            <br>
-            {% if request.session %}
-               {% if request.session.ziyaretSayisi %}
-               Ziyaret sayınız : {{ request.session.ziyaretSayisi }}
-               {% endif %}
-            {% else %}
-                Tarayıcınızda Cookie kapalı! Sitemizden daha çok faydalanmak için cookie 'leri açınız!
-            {% endif %}
-            <hr>
-          {% block vucut_blok %}
-            Burası html sayfa gövdesinin varsayılan öğesidir.
-          {% endblock %}
-          {% block alt_blok %}
-
-          {% endblock alt_blok %}
-        </div>
-      </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      {% block kategori_blok %}
+        {% kategori_listesi %}
+      {% endblock %}
     </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
-    <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+      {% if request.session %}
+        {% if request.session.ziyaretSayisi %}
+          <div class="alert alert-info" role="alert">
+            <strong>Ziyaret sayınız : </strong>{{ request.session.ziyaretSayisi }}
+          </div>
+        {% endif %}
+      {% else %}
+        <p><strong>Tarayıcınızda Cookie kapalı! Sitemizden daha çok faydalanmak için cookie 'leri açınız!</strong></p>
+      {% endif %}
+      {% block vucut_blok %}
+        Burası html sayfa gövdesinin varsayılan öğesidir.
+      {% endblock %}
+      {% block alt_blok %}
+      {% endblock alt_blok %}
+    </div>
+  </div>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="{% static "bootstrap/assets/js/vendor/jquery.min.js" %}"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+<script src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="{% static "bootstrap/assets/js/vendor/holder.min.js" %}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="{% static "bootstrap/assets/js/ie10-viewport-bug-workaround.js" %}"></script>
+</body>
 </html>
