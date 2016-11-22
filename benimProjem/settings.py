@@ -133,7 +133,7 @@ MEDIA_URL  = "/media/"
 
 
 # Üye kayıdı ile ilgili ayarlar aşağıda bulunmaktadır.
-LOGIN_URL               = "/rango/giris/"
+LOGIN_URL               = "/hesaplar/login/"
 LOGIN_REDIRECT_URL      = '/rango/'
 REGISTRATION_OPEN       = True
 ACCOUNT_ACTIVATION_DAYS = 7

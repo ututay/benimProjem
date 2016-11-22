@@ -2,10 +2,12 @@
 # Başlangıç
 from django.shortcuts import (
                               render,
-                              reverse
+                              reverse,
+                              redirect,
                               )
 from django.http import (
                          HttpResponseRedirect,
+                         HttpResponse,
                          )
 # Bitiş
 
@@ -28,7 +30,7 @@ from django.contrib.auth.decorators import login_required
 # Zaman bilgisini Cookie 'ler der kullanabilmek içni datetime kütüphanesi içe aktarılıyor.
 from datetime import datetime
 from django.contrib.auth.models import User
-
+from bingArama import bingAra
 
 def anasayfa(request):
     ziyaretSayaci(request)
@@ -125,7 +127,6 @@ def ziyaretSayaci(request):
 
 
 def kayit(request):
-    print("İSTEK YAPILDI", request)
     hata = dict()
     kullanici = KullaniciForm()
     profil = KullaniciBilgisiForm()
@@ -133,13 +134,33 @@ def kayit(request):
         kullanici = KullaniciForm(request.POST)
         profil = KullaniciBilgisiForm(request.POST)
         if kullanici.is_valid() and profil.is_valid():
-            kullanici = kullanici.save(commit=True)
+            kullanici = kullanici.save(commit=False)
             profil = profil.save(commit=False)
             if "profilResim" in request.FILES:
-                profil.profilResim = request.FILES["profilResim"]
-            profil.kullanici = kullanici
-            profil.save()
-            return HttpResponseRedirect(reverse("registration_complete"))
+                profil.profilResim  = request.FILES["profilResim"]
+                if profil.profilResim.name.endswith("jpg") or profil.profilResim.name.endswith("jpeg"):
+                    if profil.profilResim.width > 340 or profil.profilResim.height > 340:
+                        hata.update(
+                                    {
+                                    "boyut" : "Sadece 340x340 boyutundaki resimlere izin verilmektedir."
+                                    }
+                                    )
+                    else:
+                        kullanici.save()
+                        profil.kullanici = kullanici
+                        profil.save()
+                        return HttpResponseRedirect(reverse("registration_complete"))
+                else:
+                    hata.update(
+                                {
+                                "uzantı" : "Sadece jpeg yada jpg uzantılı profil resmi yükleyebilirsiniz."
+                                }
+                                )
+            else:
+                kullanici.save()
+                profil.kullanici = kullanici
+                profil.save()
+                return HttpResponseRedirect(reverse("registration_complete"))
         else:
             if not kullanici.is_valid():
                 hata.update(kullanici.errors)
@@ -147,10 +168,37 @@ def kayit(request):
             if not profil.is_valid():
                 hata.update(profil.errors)
                 print(profil.errors)
-    print(hata)
     içerik = {
             "kullanici": kullanici,
             "profil": profil,
             "hata": hata
-    }
+            }
     return render(request, "registration/registration_form.html", içerik)
+
+
+def arama(request):
+    sorgulananVeri = None
+    sorgu = None
+    if request.method == "POST":
+        sorgu = request.POST["sorgu"].strip()
+        sorgulananVeri = bingAra(sorgu)
+    return render(
+                  request,
+                  "rango/arama.html",
+                  {
+                    "sorgulananVeri": sorgulananVeri,
+                    "sorgu": sorgu,
+                  }
+                  )
+
+@login_required
+def sayfaGit(request):
+    if request.method == "GET":
+        sayfaId = request.GET.get("sayfaId")
+        try:
+            sayfa   = Sayfa.objects.get(id=sayfaId)
+            sayfa.sayfaGoruntuleme += 1
+            sayfa.save()
+            return redirect(sayfa.sayfaUrl)
+        except Exception:
+            return HttpResponseRedirect(reverse("rango:anasayfa"))

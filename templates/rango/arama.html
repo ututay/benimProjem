@@ -1,0 +1,52 @@
+{% extends "rango/taban.html" %}
+{% load staticfiles %}
+{% block stilDosyalari %}
+  <style type="text/css">
+  .alignleft {
+  float: left;
+  display: block;
+  }
+  .ekDuzenleme{
+  overflow: auto;
+  }
+  .text-center {
+  text-align: center; }
+  </style>
+{% endblock stilDosyalari %}
+{% block vucut_blok %}
+  <div class="container">
+    <h3 class="text-center">Arama Motoruna Hoşgeldiniz</h3>
+    <form method="post" action=".">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="input-group input-group-lg">
+            {% csrf_token %}
+            {% if sorgu %}
+              <input type="text" class="form-control input-lg" id="search-church" placeholder="{{ sorgu }}" name="sorgu">
+            {% else %}
+              <input type="text" class="form-control input-lg" id="search-church" placeholder="ne aramak istemiştiniz?" name="sorgu">
+            {% endif %}
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-lg" type="submit">Search</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    {% if sorgulananVeri %}
+      <div class="list-group">
+        {% for veri in sorgulananVeri %}
+          <a href="{{ veri.url }}" class="list-group-item list-group-item-action">
+            <h5 class="list-group-item-heading">{{ veri.name }}</h5>
+            <p class="list-group-item-text ekDuzenleme">
+              {% if veri.image %}
+                <img src="{{ veri.image }}" class="rounded alignleft" height="100px" width="100px">
+              {% endif %}
+              {{ veri.description }}
+            </p>
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock vucut_blok %}

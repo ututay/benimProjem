@@ -47,7 +47,7 @@
             {% for sayfa in sayfalar %}
               <li class="list-group-item">
                 <span class="tag tag-default tag-pill float-xs-right">{{ sayfa.sayfaGoruntuleme }}</span>
-                <a href="{{ sayfa.sayfaUrl }}">{{ sayfa.sayfaIsim }}</a>
+                <a href="{% url "rango:git" %}?sayfaId={{ sayfa.id }}">{{ sayfa.sayfaIsim }}</a>
               </li>
             {% endfor %}
           </ul>

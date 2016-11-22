@@ -25,6 +25,7 @@
       <nav class="nav navbar-nav float-xs-left">
         <a class="nav-item nav-link" href="{% url "rango:anasayfa" %}">Anasayfa</a>
         <a class="nav-item nav-link" href="{% url "rango:hakkimda" %}">Hakkımızda</a>
+        <a class="nav-item nav-link" href="{% url "rango:arama" %}">Arama Yap</a>
         {% if user.is_authenticated %}
           <a class="nav-item nav-link" href="{% url "rango:kategori-ekle" %}">Kategori Ekle</a>
         {% block link_blok %}{% endblock link_blok %}
